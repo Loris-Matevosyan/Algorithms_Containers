@@ -22,7 +22,7 @@ int String::capacity() noexcept {
 }
 
 void String::clear() {
-        delete m_data;
+        delete[] m_data;
         m_capacity = default_capacity;
         m_data = new char[m_capacity];
         m_size = 0;

@@ -44,7 +44,7 @@ build: create_dir $(CXX_OBJECTS)
 	$(CXX_COMPILER_CALL) $(CXX_OBJECTS) -o $(EXECUTABLE_NAME)
 
 create_dir:
-	@if not exist "Build" (mkdir build)
+	@if not exist "Build" (mkdir Build)
     # ↑ for work with Windows 
     #mkdir -p build works for Linux and Mac
 
