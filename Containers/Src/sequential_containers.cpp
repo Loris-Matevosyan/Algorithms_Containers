@@ -25,7 +25,14 @@ void check_Vectors() {
 }
 
 
+void check_Lists() {
+
+    test_List();
+}
+
+
 /*--------------String--------------*/
+
 
 void check_String_constructor() {
     std::cout << "\n-----String Default constructor and overloaded constructor-----" << std::endl;
@@ -85,6 +92,7 @@ void String_range_for_loop() {
 
 /*--------------Vector--------------*/
 
+
 void check_Vector_constructor() {
     std::cout << "\n-----Vector Default constructor and overloaded constructor-----" << std::endl;
     Vector<std::string>  vec1;
@@ -141,4 +149,35 @@ void Vector_range_for_loop() {
     // for(auto it = str.begin(); it != str.end(); ++it)
     //     std::cout << *it << "";
     std::cout << std::endl;
+}
+
+
+/*--------------List--------------*/
+
+
+void test_List() {
+
+    std::cout << "\n------Node Example------" << std::endl;
+
+    Node* node1 = new Node(1);
+    Node* node2 = new Node(2);
+    Node* node3 = new Node(3);
+    Node* node4 = new Node(4);
+    Node* node5 = new Node(5);
+    Node* node6 = new Node(6);
+
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+    node5->next = node6;
+
+    Node* temp = node1;
+    std::cout << "Print Nodes values: ";
+    for(int i = 0; i < 6; ++i) {
+        std::cout << temp->m_value << " ";
+        temp = temp->next;
+    }
+
+    delete node1;
 }

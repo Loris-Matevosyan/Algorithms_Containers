@@ -101,7 +101,7 @@ String& String::operator=(const String& obj) {
         return *this;
         //Or alternatively could use "Copy and Swap" idiom
         //must include <algorithm>, after that ↓↓↓
-        //Sting temp = obj;
+        //String temp = obj;
         //std::swap(temp, *this);
         //return *this;
 }
@@ -132,7 +132,7 @@ String& String::operator=(String&& obj) noexcept {
         return *this;
         //Or alternatively could use "Copy and Swap" idiom
         //must include <algorithm>, after that ↓↓↓
-        //Sting temp(std::move(obj));
+        //String temp(std::move(obj));
         //std::swap(temp, *this);
         //return *this;
 }

@@ -2,6 +2,7 @@
 #define _SEQUENTIAL_CONTAINERS_
 #include "String.h"
 #include "Vector.h"
+#include "List.h"
 
 
 /*===========FOR String===========*/
@@ -31,6 +32,7 @@ void check_Strings();
 
 
 
+
 /*===========FOR Vector===========*/
 
 
@@ -55,6 +57,22 @@ void Vector_range_for_loop();
 
 /*------ MAIN FUNCTION FOR VECTOR------*/
 void check_Vectors();
+
+
+
+
+/*===========FOR List===========*/
+
+void test_List();
+
+
+
+/*------ MAIN FUNCTION FOR LIST------*/
+
+void check_Lists();
+
+
+
 
 
 

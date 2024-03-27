@@ -152,9 +152,6 @@ Vector<T>::Vector(Args&& ... args)  {
         m_data = new T[m_capacity];
 
         store_data(std::forward<T>(args)...);
-        //Coping m_data
-        // for(int i = 0; i < m_size; ++i) 
-        //     m_data[i] = str[i];
         
         std::cout << "Overloaded constructor" << std::endl;
 }
@@ -188,7 +185,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& obj) {
         return *this;
         //Or alternatively could use "Copy and Swap" idiom
         //must include <algorithm>, after that ↓↓↓
-        //Sting temp = obj;
+        //Vector temp = obj;
         //std::swap(temp, *this);
         //return *this;
 }
@@ -221,7 +218,7 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& obj) noexcept {
         return *this;
         //Or alternatively could use "Copy and Swap" idiom
         //must include <algorithm>, after that ↓↓↓
-        //Sting temp(std::move(obj));
+        //Vector temp(std::move(obj));
         //std::swap(temp, *this);
         //return *this;
 }
