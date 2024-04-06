@@ -1,4 +1,5 @@
 #include "List.h"
+#include <iostream>
 #include <algorithm>
 #include <climits>
 
@@ -26,12 +27,12 @@ Node::Node(const Node& obj) {
         Node* current_ptr_previous = this;
         Node* current_ptr = this->next;
 
-        //Copying List 
+        //Copying Nodes 
         while(obj_ptr != nullptr) {
             if(obj_ptr->next != nullptr) 
                 current_ptr->next = new Node(obj_ptr->next->m_value);
             else
-                current_ptr->next = nullptr;    
+                current_ptr->next = nullptr;
             current_ptr->previous = current_ptr_previous;
 
             //Pointers going one forward (next)
@@ -47,14 +48,30 @@ Node& Node::operator=(const Node& obj) {
     if(this != &obj) {
         delete next;
         next = nullptr;
+        m_value = obj.m_value;
+        if(obj.next != nullptr) {
+            next = new Node(obj.next->m_value);
 
-        //Calling copy constructor
-        Node temp = obj;
+            //Assigning temporary pointers to traverse
+            //current and argument Lists
+            Node* obj_ptr = obj.next;
+            Node* current_ptr_previous = this;
+            Node* current_ptr = this->next;
 
-        //Swapping objects
-        std::swap(*this, temp);
+            //Copying Nodes 
+            while(obj_ptr != nullptr) {
+                if(obj_ptr->next != nullptr) 
+                    current_ptr->next = new Node(obj_ptr->next->m_value);
+                else
+                    current_ptr->next = nullptr;
+                current_ptr->previous = current_ptr_previous;
 
-        //temp is destroyed
+                //Pointers going one forward (next)
+                obj_ptr = obj_ptr->next;
+                current_ptr = current_ptr->next;
+                current_ptr_previous = current_ptr_previous->next;
+            }
+        }
     }
     return *this;
 }
@@ -73,22 +90,23 @@ Node::Node(Node&& obj) noexcept {
 Node& Node::operator=(Node&& obj) noexcept {
     if(this != &obj) {
         delete next;
-        next = nullptr;
-
-        //Calling move constructor
-        Node temp = std::move(obj);
-
-        //Swapping objects
-        std::swap(*this, temp);
-
-        //temp is destroyed
+        next = obj.next;
+        m_value = obj.m_value;
+        obj.next = nullptr;
+        obj.m_value = INT_MIN;
+        if (obj.previous != nullptr) {
+            Node* temp = obj.previous;
+            delete temp->next;
+            temp->next = nullptr;
+        }
     }
     return *this;
 }
 
 //Destructor
 Node::~Node() noexcept {
-    delete next;
+    if (next != nullptr)
+        delete next;
 }
 
 
@@ -100,42 +118,140 @@ int List::size() noexcept {
 }
 
 void List::prepend(int value) {
-    //==========================
+    Node* new_node = new Node(value);
+    if (length == 0) {
+        head = new_node;
+        tail = head;
+    } else {
+        new_node->next = head;
+        head->previous = new_node;
+        head = new_node;
+    }
+    ++length;
 }
 
 void List::append(int value) {
-    //==========================
+    Node* new_node = new Node(value);
+    if (length == 0) {
+        head = new_node;
+        tail = head;
+    } else {
+        new_node->previous = tail;
+        tail->next = new_node;
+        tail = new_node;
+    }
+    ++length;    
 }
 
 bool List::insert(int index, int value) {
-    //==========================
+    if (index < 0 || index > length) return false;
+    if (index == 0) {
+        prepend(value);
+    } else if (index == length) {
+        append(value);
+    } else {
+    Node* new_node = new Node(value);
+    Node* prev_node = get(index - 1);
+    Node* next_node = prev_node->next;
+    prev_node->next = new_node;
+    new_node->previous = prev_node;
+    next_node->previous = new_node;
+    new_node->next = next_node;
+    ++length;
+    }
     return true;
 }
 
 bool List::set(int index, int value) {
-    //==========================
-    return true;
+    Node* temp = get(index);
+    if (temp != nullptr) {
+        temp->m_value = value;
+        return true;
+    }
+    return false;
 }
 
 Node* List::get(int index) {
-    //==========================
-    return new Node();
+    if (index < 0 || index >= length) return nullptr;
+    Node* temp = head;
+    if (index < length/2) {
+        for(int i = 0; i < index; ++i) {
+            temp = temp->next;
+        }
+    } else {
+        temp = tail;
+        for(int i = length - 1; i > index; --i) {
+            temp = temp->previous;
+        }
+    }
+    return temp;
 }
 
 void List::deleteFirst() {
-    //==========================
+    if (length == 0) return;
+    Node* temp_node = head;
+    if (length == 1) {
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        head = head->next;
+        head->previous = nullptr;
+        temp_node->next = nullptr;
+    }
+    delete temp_node;
+    --length;
 }
 
 void List::deleteLast() {
-    //==========================
+    if (length == 0) return;
+    Node* temp_node = tail;
+    if (length == 1) {
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        tail = tail->previous;
+        tail->next = nullptr;
+        // ↓↓↓ Not necessary, but for completeness, because 
+        // ↓↓↓ Nodes are being deleted forward sequentially, not backward
+        temp_node->previous = nullptr;
+    }
+    delete temp_node;
+    --length;
 }
 
 void List::deleteNode(int index) {
-    //==========================
+    if (index < 0 || index >= length) return;
+    if (index == 0) return deleteFirst();
+    if (index == length - 1) return deleteLast();
+    Node* temp_node = get(index);
+    temp_node->next->previous = temp_node->previous;
+    temp_node->previous->next = temp_node->next;
+    temp_node->next = nullptr;
+    temp_node->previous = nullptr;
+    delete temp_node;
+    --length;
 }
 
 void List::reverse() {
-    //==========================
+    if (length < 2) return;
+    Node* previous_node = nullptr;
+    Node* current_node = head;
+    head = tail;
+    tail = current_node;
+    while (current_node != nullptr) {
+        previous_node = current_node->previous;
+        current_node->previous = current_node->next;
+        current_node->next = previous_node;
+        current_node = current_node->previous;
+    }
+}
+
+void List::print() {
+    Node* temp = head;
+    while (temp != nullptr) {
+        std::cout << temp->m_value << " ";
+        temp = temp->next;
+    }
 }
 
 //1
@@ -153,8 +269,8 @@ List::List(int value) {
 //3
 List::List(const List& obj) {
     if (obj.head != nullptr) {
-        head = new Node();
-        *head = *obj.head;
+        Node* new_node = new Node(*obj.head);
+        head = new_node;
         Node* temp = head;
         while(temp->next != nullptr) {
             temp = temp->next;
@@ -170,14 +286,16 @@ List& List::operator=(const List& obj) {
         delete head;
         head = nullptr;
         tail = nullptr;
-
-        //Calling copy constructor
-        List temp = obj;
-
-        //Swapping objects
-        std::swap(*this, temp);
-
-        //temp is destroyed
+        if (obj.head != nullptr) {
+            Node* new_node = new Node(*obj.head);
+            head = new_node;
+            Node* temp = head;
+            while(temp->next != nullptr) {
+                temp = temp->next;
+            }
+            tail = temp;
+        }
+        length = obj.length;
     }
     return *this;
 }
@@ -196,23 +314,21 @@ List::List(List&& obj) noexcept {
 List& List::operator=(List&& obj) noexcept {
     if (this != &obj) {
         delete head;
-        head = nullptr;
-        tail = nullptr;
-        length = 0;
-
-        //Calling move constructor
-        List temp = std::move(obj);
-
-        //Swapping objects
-        std::swap(*this, temp);
-
-        //temp is destroyed
+        head = obj.head;
+        tail = obj.tail;
+        length = obj.length;
+        obj.head = nullptr;
+        obj.tail = nullptr;
+        obj.length = 0;
     }
     return *this;
 }
 
 //7
 List::~List() noexcept {
-    delete head;
+    // Deleting one Node will delete all of them sequentially
+    // No need to delete tail pointer
+    if (head != nullptr)
+        delete head;
 }
 

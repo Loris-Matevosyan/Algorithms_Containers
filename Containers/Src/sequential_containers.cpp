@@ -27,7 +27,12 @@ void check_Vectors() {
 
 void check_Lists() {
 
-    test_List();
+    check_List_constructors_and_operators();
+    List_add_element();
+    List_set_and_get_element();
+    List_delete_element();
+    List_reverse();
+
 }
 
 
@@ -35,6 +40,7 @@ void check_Lists() {
 
 
 void check_String_constructor() {
+    std::cout << "\n\n=============STRING=============\n" << std::endl;
     std::cout << "\n-----String Default constructor and overloaded constructor-----" << std::endl;
     String str1;
     String str2{"Hi friend"};
@@ -94,6 +100,7 @@ void String_range_for_loop() {
 
 
 void check_Vector_constructor() {
+    std::cout << "\n\n=============VECTOR=============\n" << std::endl;
     std::cout << "\n-----Vector Default constructor and overloaded constructor-----" << std::endl;
     Vector<std::string>  vec1;
     Vector<std::string>  vec2{"Hi friend", "My dear friend", "Bye bye"};
@@ -155,29 +162,85 @@ void Vector_range_for_loop() {
 /*--------------List--------------*/
 
 
-void test_List() {
+void check_List_constructors_and_operators() {
+    std::cout << "\n\n=============LIST=============\n" << std::endl;
+    std::cout << "\n-----Lists Constructors and Operators-----" << std::endl;
+    List list;
+    std::cout << "\n--Called Default Constructor--" << std::endl;
+    List list1(1);
+    List list2(2);
+    std::cout << "--Called Overloaded Constructor--" << std::endl;
+    List list3 = list1;
+    std::cout << "--Called Copy Constructor--" << std::endl;
+    list2 = list3;
+    std::cout << "--Called Copy Assignment Operator--" << std::endl;
+    List list4 = std::move(list3);
+    std::cout << "--Called Move Constructor--" << std::endl;
+    list2 = std::move(list1);
+    std::cout << "--Called Move Assignment Operator--" << std::endl;
+}
 
-    std::cout << "\n------Node Example------" << std::endl;
+void List_add_element() {
+    std::cout << "\n-----Adding Node to List-----\n" << std::endl;
+    List list(2);
+    std::cout << "Created list with value 2" << std::endl;
+    std::cout << "list contains (call to print() member function): ";
+    list.print();
+    list.append(3);
+    std::cout << "\nAfter appending value 3 to list, list contains: ";
+    list.print();
+    list.prepend(1);
+    std::cout << "\nAfter prepending value 1 to list, list contains: ";
+    list.print();
+    list.insert(2, 4);
+    std::cout << "\nAfter inserting value 4 to list at index 2 list contains: ";
+    list.print();
+    std::cout << "\nlist size is (call to size() member function): " << list.size();
+    std::cout << std::endl;
+}
 
-    Node* node1 = new Node(1);
-    Node* node2 = new Node(2);
-    Node* node3 = new Node(3);
-    Node* node4 = new Node(4);
-    Node* node5 = new Node(5);
-    Node* node6 = new Node(6);
+void List_set_and_get_element() {
+    std::cout << "\n-----Setting and Getting Node from List-----\n" << std::endl;
+    List list = creatingList();
+    list.set(3, 10);
+    std::cout << "\nAfter adding value 10 to list at index 3, list constains: ";
+    list.print();
+    Node* node = list.get(2);
+    std::cout << "\nGetting Node at index 2, which value is: " << node->m_value << std::endl;
+}
 
-    node1->next = node2;
-    node2->next = node3;
-    node3->next = node4;
-    node4->next = node5;
-    node5->next = node6;
+void List_delete_element() {
+    std::cout << "\n-----Deleting Node from List-----\n" << std::endl;
+    List list = creatingList();
+    list.deleteFirst();
+    std::cout << "\nAfter deleting first Node, list contains: ";
+    list.print();
+    list.deleteLast();
+    std::cout << "\nAfter deleting last Node, list contains: ";
+    list.print();
+    list.deleteNode(1);
+    std::cout << "\nAfter deleting Node at index 1, list contains: ";
+    list.print();
+    std::cout << std::endl;
+}
 
-    Node* temp = node1;
-    std::cout << "Print Nodes values: ";
-    for(int i = 0; i < 6; ++i) {
-        std::cout << temp->m_value << " ";
-        temp = temp->next;
-    }
+void List_reverse() {
+    std::cout << "\n-----Reverse List-----\n" << std::endl;
+    List list = creatingList();
+    list.reverse();
+    std::cout << "\nAfter reversing list, list contains: ";
+    list.print();
+    std::cout << std::endl;
+}
 
-    delete node1;
+List creatingList() {
+    List list(1);
+    list.append(2);
+    list.append(3);
+    list.append(4);
+    list.append(5);
+    std::cout << "Created list with value 1 and appended values 2, 3, 4, 5" << std::endl;
+    std::cout << "list contains (call to print() member function): ";
+    list.print();
+    return list;
 }

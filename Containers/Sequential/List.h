@@ -52,19 +52,19 @@ public:
     //Checking size
     int size() noexcept;
 
-    //Prepand element
+    //Prepand Node
     void prepend(int value);
 
-    //Append element
+    //Append Node
     void append(int value);
 
-    //Inserting element
+    //Inserting Node
     bool insert(int index, int value);
 
-    //Set element
+    //Set Node
     bool set(int index, int value);
 
-    //Get element
+    //Get Node
     Node* get(int index);
 
     //Delete first Node
@@ -78,6 +78,9 @@ public:
 
     //Reverse List
     void reverse();
+
+    //Print List
+    void print();
 
     //Default constructor (1)
     List();
