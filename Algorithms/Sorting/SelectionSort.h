@@ -11,21 +11,33 @@
 #ifndef _SELECTIONSORT_
 #define _SELECTIONSORT_
 
-class SelectionSort {
+
+class SelectionSort 
+{
     SelectionSort() = default;
     SelectionSort(const SelectionSort& obj) = delete;
     SelectionSort& operator=(const SelectionSort& obj) = delete;
+
 public:
-    static void sort(int array[], int size) {
+
+    static void sort(int array[], int size) 
+    {
         int minIndex, temp;
-        for(int i = 0; i < size; ++i) {
+
+        for( int i = 0; i < size; ++i ) 
+        {
             minIndex = i;
-            for(int j = i + 1; j < size; ++j) {
-                if (array[minIndex] > array[j]) {
+
+            for( int j = i + 1; j < size; ++j ) 
+            {
+                if( array[minIndex] > array[j] ) 
+                {
                     minIndex = j;
                 }
             }
-            if (i != minIndex) {
+            
+            if( i != minIndex ) 
+            {
                 //Can use one line without temp with #include <algorithm>
                 //std::swap(array[i], array[minIndex]);
                 temp = array[i];
@@ -34,6 +46,7 @@ public:
             }
         }
     } 
+
     ~SelectionSort() noexcept = delete;
 };
 

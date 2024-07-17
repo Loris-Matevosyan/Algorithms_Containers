@@ -1,8 +1,11 @@
-#include "sorting.h"
+#include "Sorting.h"
 
-int main() {
+
+int main() 
+{
 
     sorting();
 
-return 0;
+
+    return 0;
 }

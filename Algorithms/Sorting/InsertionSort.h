@@ -11,25 +11,35 @@
 #ifndef _INSERTIONSORT_
 #define _INSERTIONSORT_
 
-class InsertionSort {
+
+class InsertionSort 
+{
     InsertionSort() = default;
     InsertionSort(const InsertionSort& obj) = delete;
     InsertionSort& operator=(const InsertionSort& obj) = delete;
+
 public:
-    static void sort(int array[], int size) {
+
+    static void sort(int array[], int size) 
+    {
         int temp, j;
-        for(int i = 1; i < size; ++i) {
+
+        for( int i = 1; i < size; ++i ) 
+        {
             temp = array[i];
             j = i - 1;
-            while (j >= 0 && array[j] > temp) {
+            
+            while( j >= 0 && array[j] > temp ) 
+            {
                 array[j + 1] = array[j];
                 array[j] = temp;
                 --j;
             }
         }
     }
+
     ~InsertionSort() noexcept = default;
 };
 
 
-#endif // _INSERTIONSORT_
+#endif //_INSERTIONSORT_
