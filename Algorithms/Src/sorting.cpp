@@ -61,11 +61,32 @@ std::pair<vectorOfInt, int> sorting_input(vectorOfInt numbers_for_sorting, int s
             MergeSort::sort(numbers_for_sorting.data(), numbers_for_sorting.size());
             end = time_now();
             break;
+        case 6: 
+            start = time_now();
+            HeapSort::sort(numbers_for_sorting.data(), numbers_for_sorting.size());
+            end = time_now();
+            break;
         default:
             break;
     }
 
     return std::make_pair(numbers_for_sorting, time_interval(end, start));
+}
+
+
+void print_numbers(const vectorOfInt& numbers, std::string_view text) 
+{
+    std::cout << text;
+    for(const auto& el: numbers)
+        std::cout << el << " ";
+    std::cout << std::endl;
+}
+
+
+void display_results(const vectorOfInt& sorted, const vectorOfInt& unsorted) 
+{
+    print_numbers(unsorted, "Numbers before sorting: ");
+    print_numbers(sorted, "Numbers after sorting: ");
 }
 
 
@@ -88,6 +109,9 @@ void used_algorithm(int sorting_choice)
         case 5: 
             std::cout << "Merge sorting algorithm have been used" << std::endl;
             break;
+        case 6: 
+            std::cout << "Heap sorting algorithm have been used" << std::endl;
+            break;
         default:
             break;
     }
@@ -99,18 +123,3 @@ void algorithm_duration(long long int duration)
     std::cout << "Sorting time: " << duration << " nanoseconds" << std::endl;
 }
 
-
-void print_numbers(const vectorOfInt& numbers, std::string_view text) 
-{
-    std::cout << text;
-    for(const auto& el: numbers)
-        std::cout << el << " ";
-    std::cout << std::endl;
-}
-
-
-void display_results(const vectorOfInt& sorted, const vectorOfInt& unsorted) 
-{
-    print_numbers(unsorted, "Numbers before sorting: ");
-    print_numbers(sorted, "Numbers after sorting: ");
-}

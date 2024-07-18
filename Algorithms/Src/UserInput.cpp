@@ -23,14 +23,14 @@ int algorithm_choice()
     {
         std::cout << "Please choose which sorting algorithm do you want to use\n" <<
                  "1. Bubble Sort\n" << "2. Selection Sort\n" << "3. Insertion Sort\n" << 
-                 "4. Quick Sort\n" << "5. Merge Sort" << std::endl;
+                 "4. Quick Sort\n" << "5. Merge Sort\n" << "6. Heap Sort" << std::endl;
         std::cin  >> choice;
 
         if (isdigit(choice)) 
         {
             sorting_choice = choice - 48;
 
-            if (sorting_choice > 0 && sorting_choice < 6) 
+            if (sorting_choice > 0 && sorting_choice < 7) 
             {
                 wrong_input = false;
             }
