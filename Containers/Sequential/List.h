@@ -5,7 +5,8 @@
 /*====================Node Struct====================*/
 
 
-struct Node{
+struct Node
+{
 
     /*  Data members (attributes)  */
 
@@ -41,7 +42,8 @@ struct Node{
 /*====================List Class====================*/
 
 
-class List{
+class List
+{
 
     Node* head{nullptr};
     Node* tail{nullptr};
@@ -103,6 +105,7 @@ public:
     //Destructor (7)
     ~List() noexcept;
 };
+
 
 
 #endif //_LIST_

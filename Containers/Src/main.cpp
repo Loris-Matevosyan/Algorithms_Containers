@@ -4,9 +4,10 @@
 
 int main() {
     
-    // check_Strings();
-    // check_Vectors();
-    // check_Lists();
+
+    check_Strings();
+    check_Vectors();
+    check_Lists();
     check_Heaps();
 
 

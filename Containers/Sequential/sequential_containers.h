@@ -1,5 +1,6 @@
 #ifndef _SEQUENTIAL_CONTAINERS_
 #define _SEQUENTIAL_CONTAINERS_
+
 #include "String.h"
 #include "Vector.h"
 #include "List.h"

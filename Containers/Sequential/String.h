@@ -1,14 +1,18 @@
 #ifndef _STRING_
 #define _STRING_
+
 #include <iostream>
 #include <string>
 
 
-class String{
+
+class String
+{
     char* m_data;
     int m_size;
     int m_capacity;
     static constexpr int default_capacity{5};
+    
 public:
     //Output operator 
     friend std::ostream& operator<<(std::ostream& os, const String& obj);
