@@ -1,3 +1,5 @@
+.PHONY : all build execute clear 
+
 # To disable debug Type in command line ----> make DEBUG = 0
 # To disable warnings Type in command line ---> make ENABLE_WARNINGS = 0
 # To enable warnings threat as errors Type in command line ----> make WARNINGS_AS_ERRORS = 1
@@ -7,7 +9,7 @@ ENABLE_WARNINGS ?= 1
 WARNINGS_AS_ERRORS ?= 0
 #	↑↑↑		IF NEEDED	  ↑↑↑	#
 
-INCLUDE_DIR = Sequential
+INCLUDE_DIRS = Sequential Tree
 SOURCE_DIR = Src
 BUILD_DIR = Build
 
@@ -23,7 +25,7 @@ endif
 
 CXX = g++
 CXX_STANDARD_VERSION = c++17
-CPPFLAGS = -I $(INCLUDE_DIR)
+CPPFLAGS = $(addprefix -I, $(INCLUDE_DIRS))
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD_VERSION)
 
 ifeq ($(DEBUG), 1)
@@ -41,7 +43,7 @@ CXX_OBJECTS = $(patsubst $(SOURCE_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(CXX_SOURCES))
 all: build
 
 build: create_dir $(CXX_OBJECTS)
-	$(CXX_COMPILER_CALL) $(CXX_OBJECTS) -o $(EXECUTABLE_NAME)
+	@$(CXX_COMPILER_CALL) $(CXX_OBJECTS) -o $(EXECUTABLE_NAME)
 
 create_dir:
 	@if not exist "Build" (mkdir Build)
@@ -57,9 +59,8 @@ clear:
     #rm -f works for Linux and Mac
 
 $(BUILD_DIR)/%.o : $(SOURCE_DIR)/%.cpp
-	$(CXX_COMPILER_CALL) -c $< -o $@
+	@$(CXX_COMPILER_CALL) -c $< -o $@
 
-.PHONY : all build execute clear 
 
 # Type in command line to bulid project ----> make
 # Type in command line to execute ----> make execute
