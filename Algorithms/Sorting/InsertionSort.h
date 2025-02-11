@@ -2,7 +2,7 @@
     -------Time Complexity-------- 
     Best case - Ω(n)
     Average case - Θ(n^2)
-    Worst cas - O(n^2)
+    Worst case - O(n^2)
     -------Space Complexity-------
     Worst case - O(1) (constant)
     -----Stable Algorithm-----

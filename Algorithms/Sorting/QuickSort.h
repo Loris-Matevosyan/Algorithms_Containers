@@ -2,7 +2,7 @@
     -------Time Complexity-------- 
     Best case - Ω(nlogn)
     Average case - Θ(nlogn)
-    Worst cas - O(n^2)
+    Worst case - O(n^2)
     -------Space Complexity-------
     Best case - O(logn) 
     Average case - O(logn) 
